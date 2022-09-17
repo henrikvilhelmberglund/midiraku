@@ -46,3 +46,4 @@ Stuff I will need: (WIP)
 ## "Would be nice to have" features
 - patterns (like FL patterns)
 - nice looking video output
+- fancy synthesia like viewing mode
