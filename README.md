@@ -47,3 +47,7 @@ Stuff I will need: (WIP)
 - patterns (like FL patterns)
 - nice looking video output
 - fancy synthesia like viewing mode
+
+Nice links:
+https://www.keithmcmillen.com/blog/making-music-in-the-browser-web-midi-api/
+https://webmidi-examples.glitch.me
