@@ -17,10 +17,10 @@
 }
 
 button {
-  height: 30px;
+  height: 28px;
   width: 60px;
   padding: 0px;
-  margin: 1px;
+  margin: 0px;
   /* padding: 14px; */
   border: 1px solid black;
 }
