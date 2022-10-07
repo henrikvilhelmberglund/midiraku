@@ -4,20 +4,20 @@ let midiIn = [];
 let midiOut = [];
 let selectedIndex = 0;
 
-export function connect() {
+function connect() {
   navigator.requestMIDIAccess()
     .then(
       (midi) => midiReady(midi),
       (err) => console.log('Something went wrong', err));
 }
 
-export function midiReady(midi) {
+function midiReady(midi) {
   // Also react to device changes.
   midi.addEventListener('statechange', (event) => initDevices(event.target));
   initDevices(midi); // see the next section!
 }
 
-export function initDevices(midi) {
+function initDevices(midi) {
   // Reset.
   midiIn = [];
   midiOut = [];
@@ -40,13 +40,13 @@ export function initDevices(midi) {
 
 
 // Start listening to MIDI messages.
-export function startListening() {
+function startListening() {
   for (const input of midiIn) {
     input.addEventListener('midimessage', midiMessageReceived);
   }
 }
 
-export function midiMessageReceived(event) {
+function midiMessageReceived(event) {
   // MIDI commands we care about. See
   // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
   const NOTE_ON = 9;
@@ -77,7 +77,7 @@ export function midiMessageReceived(event) {
   }
 }
 
-export function sendMidiMessage(pitch, velocity, duration) {
+function sendMidiMessage(pitch, velocity, duration) {
   const NOTE_ON = 0x90;
   const NOTE_OFF = 0x80;
 
