@@ -1,3 +1,5 @@
+import * as midi from "./webmidi.js";
+
 let noteDivs = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"].reverse();
 let mainDiv = document.createElement("div");
 mainDiv.id = "main-div";
@@ -34,6 +36,8 @@ function addNote(e) {
       e.target.append(newNote);
     }
   }
-
 }
+// test
+midi.connect;
+midi.sendMidiMessage(61, 100, 100);
 
