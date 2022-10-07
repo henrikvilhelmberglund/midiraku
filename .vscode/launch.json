@@ -15,7 +15,7 @@
         "--headless",
         "--remote-debugging-port=9222"
       ],
-      "url": "c:\\Users\\Henke\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.1\\out\\startpage\\index.html", // Provide your project's url to finish configuring
+      "url": "http://localhost:5500", // Provide your project's url to finish configuring
       "presentation": {
         "hidden": true
       }
@@ -24,7 +24,7 @@
       "type": "vscode-edge-devtools.debug",
       "name": "Open Edge DevTools",
       "request": "attach",
-      "url": "c:\\Users\\Henke\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.1\\out\\startpage\\index.html", // Provide your project's url to finish configuring
+      "url": "http://localhost:5500", // Provide your project's url to finish configuring
       "presentation": {
         "hidden": true
       }
@@ -36,7 +36,7 @@
       "runtimeArgs": [
         "--remote-debugging-port=9222"
       ],
-      "url": "c:\\Users\\Henke\\.vscode\\extensions\\ms-edgedevtools.vscode-edge-devtools-2.1.1\\out\\startpage\\index.html", // Provide your project's url to finish configuring
+      "url": "http://localhost:5500", // Provide your project's url to finish configuring
       "presentation": {
         "hidden": true
       }
