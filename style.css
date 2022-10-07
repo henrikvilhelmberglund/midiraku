@@ -1,0 +1,12 @@
+.note-div {
+  border: 1px solid black;
+  height: 30px;
+}
+
+button {
+  height: 30px;
+  padding: 0px;
+  margin: 1px;
+  /* padding: 14px; */
+  border: 1px solid black;
+}
