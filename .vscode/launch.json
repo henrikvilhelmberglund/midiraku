@@ -5,7 +5,7 @@
       "request": "launch",
       "type": "vscode-edge-devtools.debug",
       "url": "http://localhost:5500",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
     },
     {
       "type": "pwa-msedge",
