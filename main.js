@@ -27,7 +27,7 @@ const myMidi = JZZ().openMidiOut();
 
 //console.log(midiOut);
 
-let noteDivs = ["C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5"].reverse();
+let noteDivs = ["C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", "C6"].reverse();
 let mainDiv = document.createElement("div");
 mainDiv.id = "main-div";
 document.body.append(mainDiv);
@@ -59,12 +59,46 @@ addVerticalDivs();
 function addNote(e) {
   let newNote = document.createElement("button");
   newNote.innerText = "Note";
-  newNote.addEventListener("click", (e) => moveNote(e));
+  newNote.addEventListener("click", (e) => editNote(e));
+  newNote.addEventListener("mousedown", (e) => moveNote(e, true));
+  newNote.addEventListener("mouseup", (e) => moveNote(e, false));
+
   if (e.target.className === "vertical-note-div" || e.target.className === "horizontal-note-div") {
     if (e.target.children.length < 1) {
-      myMidi.note(0, e.target.parentElement.id, 127, 500);
+      myMidi.note(0, e.target.parentElement.id, 127, 200);
       e.target.append(newNote);
     }
+  }
+}
+
+function editNote(e) {
+  if (e.altKey) {
+    e.target.remove(e.target);
+  }
+}
+
+let myTimer;
+
+// TODO: fix interval
+
+function moveNote(e, isHolding) {
+  if (isHolding) {
+    myTimer = setInterval(() => {
+      if (isHolding) {
+        let hoverArray = document.querySelectorAll(":hover");
+        console.log(hoverArray);
+        hoverArray[4].append(e.target);
+        console.log("");
+      }
+      else {
+        isHolding = false;
+      }
+
+    }, 100);
+  }
+  else if (!isHolding) {
+    clearInterval(myTimer);
+    console.log("let go");
   }
 }
   // test
