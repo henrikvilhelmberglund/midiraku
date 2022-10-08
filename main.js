@@ -1,8 +1,13 @@
 // from https://webmidijs.org/docs/getting-started/basics
 // Enable WEBMIDI.js and trigger the onEnabled() function when ready
 
-const myMidi = await WebMidi.enable();
-//let midiOut = myMidi.outputs[0];
+//const myMidi = await WebMidi.enable();
+//const myMidi = await JZZ();
+//let midiOut = JZZ().openMidiOut();
+JZZ().or('Cannot start MIDI engine!')
+  .openMidiOut().or('Cannot open MIDI Out port!')
+  .wait(500).send([0x90, 60, 127]) // note on
+  .wait(500).send([0x80, 60, 0]);  // note off
 //console.log(midiOut);
 /*
   // Function triggered when WEBMIDI.js is ready
