@@ -2,12 +2,11 @@
 // Enable WEBMIDI.js and trigger the onEnabled() function when ready
 
 //const myMidi = await WebMidi.enable();
-//const myMidi = await JZZ();
-//let midiOut = JZZ().openMidiOut();
-JZZ().or('Cannot start MIDI engine!')
-  .openMidiOut().or('Cannot open MIDI Out port!')
-  .wait(500).send([0x90, 60, 127]) // note on
-  .wait(500).send([0x80, 60, 0]);  // note off
+const myMidi = JZZ().openMidiOut();
+
+//JZZ().or('Cannot start MIDI engine!')
+//  .openMidiOut().or('Cannot open MIDI Out port!')
+//myMidi.openMidiOut().send([0x90, 60, 127]).wait(500).send([0x80, 60, 0]);  // note off
 //console.log(midiOut);
 /*
   // Function triggered when WEBMIDI.js is ready
@@ -28,7 +27,7 @@ JZZ().or('Cannot start MIDI engine!')
 
 //console.log(midiOut);
 
-let noteDivs = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"].reverse();
+let noteDivs = ["C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5"].reverse();
 let mainDiv = document.createElement("div");
 mainDiv.id = "main-div";
 document.body.append(mainDiv);
@@ -43,6 +42,7 @@ function addVerticalDivs() {
     noteDiv.className = "vertical-note-div";
     noteDiv.addEventListener("mousedown", (e) => addNote(e));
     mainDiv.append(noteDiv);
+
     for (let i = 0; i < horizontalDivision; i++) {
       let horizontalDiv = document.createElement("div");
       horizontalDiv.className = "horizontal-note-div";
@@ -53,12 +53,16 @@ function addVerticalDivs() {
 
 addVerticalDivs();
 
+//myMidi.openMidiOut().send([0x90, 60, 127]).wait(500).send([0x80, 60, 0]);  // note off
+
+
 function addNote(e) {
   let newNote = document.createElement("button");
   newNote.innerText = "Note";
   newNote.addEventListener("click", (e) => moveNote(e));
   if (e.target.className === "vertical-note-div" || e.target.className === "horizontal-note-div") {
     if (e.target.children.length < 1) {
+      myMidi.note(0, e.target.parentElement.id, 127, 500);
       e.target.append(newNote);
     }
   }
