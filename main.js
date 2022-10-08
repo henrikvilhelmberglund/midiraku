@@ -58,7 +58,7 @@ addVerticalDivs();
 
 function addNote(e) {
   let newNote = document.createElement("button");
-  newNote.innerText = "Note";
+  newNote.innerText = e.target.parentElement.id;
   newNote.addEventListener("click", (e) => editNote(e));
   newNote.addEventListener("mousedown", (e) => moveNote(e, true));
   newNote.addEventListener("mouseup", (e) => moveNote(e, false));
