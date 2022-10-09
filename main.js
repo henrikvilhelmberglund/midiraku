@@ -81,23 +81,36 @@ let myTimer;
 
 // TODO: fix interval
 
+let myIntervalArray = [];
+
 function moveNote(e, isHolding) {
+  let lastNote;
   if (isHolding) {
-    myTimer = setInterval(() => {
+    myIntervalArray.push(setInterval(() => {
+      let hoverArray = document.querySelectorAll(":hover");
       if (isHolding) {
-        let hoverArray = document.querySelectorAll(":hover");
-        console.log(hoverArray);
+        e.target.innerText = hoverArray[3].id;
+        //console.log(hoverArray);
+        //console.log(lastNote);
         hoverArray[4].append(e.target);
-        console.log("");
+        let hoverArrayChanged = document.querySelectorAll(":hover");
+        console.log(hoverArray[3].id);
+        console.log(hoverArrayChanged[3].id);
+        if (hoverArrayChanged[3].id !== lastNote) {
+          lastNote = hoverArray[3].id;
+          myMidi.note(0, hoverArray[3].id, 127, 200);
+          //console.log("it is true");
+        }
       }
       else {
         isHolding = false;
       }
 
-    }, 100);
+    }, 3));
   }
   else if (!isHolding) {
-    clearInterval(myTimer);
+    myIntervalArray.forEach(timer => clearInterval(timer));
+    myIntervalArray = [];
     console.log("let go");
   }
 }
