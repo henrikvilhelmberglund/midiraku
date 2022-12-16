@@ -33,7 +33,11 @@
 		"A5",
 		"A#5",
 		"B5",
-		"C6"
+		"C6",
+		"C#6",
+		"D6",
+		"D#6",
+		"E6"
 	];
 	let noteKeys = [
 		{ key: "KeyZ", note: "C4" },
@@ -53,6 +57,7 @@
 		{ key: "Period", note: "D5" },
 		{ key: "Semicolon", note: "D#5" },
 		{ key: "Slash", note: "E5" },
+		{ key: "KeyQ", note: "B4" },
 		{ key: "KeyW", note: "C5" },
 		{ key: "Digit3", note: "C#5" },
 		{ key: "KeyE", note: "D5" },
@@ -83,6 +88,8 @@
 		// "Equal",
 		// "BracketRight"
 	];
+	let pressedKey;
+	let releasedKey;
 
 	function playNote(note) {
 		midi.send([0x90, note, 127]).wait(500).send([0x80, note, 0]); // note off
@@ -92,15 +99,21 @@
 		let finalNoteIndex = noteKeys.findIndex((i) => i.key === code);
 		let finalNote = noteKeys[finalNoteIndex].note;
 		// const pos = myArray.map((e) => e.hello).indexOf("stevie");
-		console.log(finalNote);
+		// console.log(finalNote);
 		midi.send([0x90, finalNote, 127]).wait(500).send([0x80, finalNote, 0]); // note off
+		pressedKey = document.querySelector("#" + finalNote.replace("#", "-"));
+		pressedKey.classList.add("pressed");
 	}
 
 	function keyDebug(e) {
-		console.log(e);
-	}
-	function keyUp(e) {
 		// console.log(e);
+	}
+	function keyUp(code) {
+		// console.log(code);
+		let finalNoteIndex = noteKeys.findIndex((i) => i.key === code);
+		let finalNote = noteKeys[finalNoteIndex].note;
+		releasedKey = document.querySelector("#" + finalNote.replace("#", "-"));
+		releasedKey.classList.remove("pressed");
 	}
 </script>
 
@@ -109,17 +122,24 @@
 		<div class="relative">
 			{#if note.includes("#")}
 				<button
-					class="btn btn-filled-primary btn-base absolute -bottom-14 -right-8 z-10 m-1 h-64 w-16 rounded-lg bg-black text-white"
+					id={note.replace("#", "-")}
+					class="btn btn-filled-primary btn-base absolute -bottom-14 -right-8 z-10 m-1 h-64 w-12 rounded-lg bg-black text-white"
 					on:mousedown={() => playNote(note)}
-					on:keydown={(e) => playNoteKey(e.code)}>
+					on:keydown={(e) => playNoteKey(e.code)}
+					on:keyup={(e) => keyUp(e.code)}>
 					<span class="relative -bottom-16">{note}</span></button>
 			{:else}
 				<button
+					id={note.replace("#", "-")}
 					class="btn btn-filled-primary btn-base z-20 m-1 h-96 w-16 rounded-lg bg-white"
 					on:mousedown={() => playNote(note)}
-					on:keydown={(e) => playNoteKey(e.code)}>
+					on:keydown={(e) => playNoteKey(e.code)}
+					on:keyup={(e) => keyUp(e.code)}>
 					<span class="relative -bottom-32">{note}</span></button>
 			{/if}
 		</div>
 	{/each}
 </main>
+
+<style>
+</style>
