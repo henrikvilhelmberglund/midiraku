@@ -1,6 +1,8 @@
-# MIDIeditor
+# midiraku
 
 Goal is to create an online (and offline) MIDI editor that has less janky mouse note editing than in Reaper, more keyboard shortcuts and faster output rendering than in FL and is easier to use than Domino.
+
+The name midiraku is a combination of "MIDI" and the Japanese word "raku" 楽 meaning simple, easy which is the main focus.
 
 Stuff I will need: (WIP)
 
