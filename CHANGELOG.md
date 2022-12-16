@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.0.4](https://github.com/henrikvilhelmberglund/midiraku/compare/v0.0.3...v0.0.4) (2022-12-16)
+
+
+### Features
+
+* :sparkles: add animation for keyboard inputs ([67b4b0d](https://github.com/henrikvilhelmberglund/midiraku/commit/67b4b0dfbdf9a3ffe54560bcede842c276628945))
+* :lipstick: add animation for .pressed class ([96fc2c1](https://github.com/henrikvilhelmberglund/midiraku/commit/96fc2c18c7c8ea10d790fcf056026bee254c4991))
+
 ### [0.0.3](https://github.com/henrikvilhelmberglund/midiraku/compare/v0.0.2...v0.0.3) (2022-12-16)
 
 
