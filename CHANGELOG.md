@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.0.2](https://github.com/henrikvilhelmberglund/midiraku/compare/v0.0.1...v0.0.2) (2022-12-16)
+
+
+### Features
+
+* :sparkles: add adapter-static and configuration ([a42de47](https://github.com/henrikvilhelmberglund/midiraku/commit/a42de471d66684e0d1825c53eae7e59bb799e024))
+
+
+### Bug Fixes
+
+* :bug: fix .postcss path in skeleton route ([420cccc](https://github.com/henrikvilhelmberglund/midiraku/commit/420cccceb6f67252b6b9d6606536cb1ee9548a0b))
+
 ### 0.0.1 (2022-12-16)
 
 
