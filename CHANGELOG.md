@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [0.0.3](https://github.com/henrikvilhelmberglund/midiraku/compare/v0.0.2...v0.0.3) (2022-12-16)
+
+
+### Bug Fixes
+
+* :bug: move .nojekyll file to static folder ([c546eed](https://github.com/henrikvilhelmberglund/midiraku/commit/c546eed9558475c0760b3011c09f098cc53da0b3))
+* :bug: add paths to svelte.config.js ([fba0dc0](https://github.com/henrikvilhelmberglund/midiraku/commit/fba0dc0a6e5a2b63d67e30b160333102cb156411))
+* :bug: add .nojekyll file to make sure tailwind CSS works ([43eee83](https://github.com/henrikvilhelmberglund/midiraku/commit/43eee83872ee79db1dd30fbf946b5f82a59c128a))
+
 ### [0.0.2](https://github.com/henrikvilhelmberglund/midiraku/compare/v0.0.1...v0.0.2) (2022-12-16)
 
 
