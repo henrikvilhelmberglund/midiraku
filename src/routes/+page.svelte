@@ -154,7 +154,16 @@
 </script>
 
 <main class="flex h-full flex-col items-center justify-center">
-	<RangeSlider bind:value={currentProgram} max={127} step={1} ticked class="w-3/4"
+  <div>
+  
+    {#await midi then value}
+    <!-- {console.log(value.info())} -->
+    {#each Object.entries(value.info()) as info}
+    <p>{info},</p>
+    {/each}
+    {/await}
+  </div>
+	<RangeSlider bind:value={currentProgram} max={127} step={1}  class="p-12 w-3/4"
 		>{instruments[currentProgram]}</RangeSlider>
 	<div>
 		<article
@@ -209,11 +218,11 @@
 	</div>
 </main>
 
+<!-- scale messed up mouseenter etc because of absolute children so remove scale -->
 <style>
 	:global(.pressed) {
 		@apply scale-95 bg-blue-300 transition-all duration-100;
 	}
-	/* scale messed up mouseenter etc because of absolute children so remove scale*/
 	:global(.pressed2) {
 		@apply bg-blue-300 transition-all duration-100;
 	}
