@@ -1,7 +1,9 @@
 <script>
 	import JZZ from "jzz";
+	import { RangeSlider } from "@skeletonlabs/skeleton";
+	import { instruments } from "./instruments.js";
 	let midi = JZZ().openMidiOut();
-	midi;
+	// midi;
 
 	// midi
 	// 	.wait(500)
@@ -90,19 +92,52 @@
 	];
 	let pressedKey;
 	let releasedKey;
+	let currentProgram = 0;
+	let mouseDown;
+
+	// function changeProgram(program) {
+	// 	midi.program = program;
+	// 	console.log(program);
+	// }
+
+	$: {
+		midi.program(0, currentProgram);
+	}
 
 	function playNote(note) {
-		midi.send([0x90, note, 127]).wait(500).send([0x80, note, 0]); // note off
+		if (mouseDown) {
+			midi.send([0x90, note, 127]); // note off
+			pressedKey = document.querySelector("#" + note.replace("#", "-"));
+			if (note.includes("#")) {
+				pressedKey.classList.add("pressed2");
+			} else {
+				pressedKey.classList.add("pressed");
+			}
+		}
+	}
+
+	function releaseNote(note) {
+		midi.send([0x80, note, 0]); // note off
+		pressedKey = document.querySelector("#" + note.replace("#", "-"));
+		if (note.includes("#")) {
+			pressedKey.classList.remove("pressed2");
+		} else {
+			pressedKey.classList.remove("pressed");
+		}
 	}
 
 	function playNoteKey(code) {
 		let finalNoteIndex = noteKeys.findIndex((i) => i.key === code);
 		let finalNote = noteKeys[finalNoteIndex].note;
-		// const pos = myArray.map((e) => e.hello).indexOf("stevie");
-		// console.log(finalNote);
-		midi.send([0x90, finalNote, 127]).wait(500).send([0x80, finalNote, 0]); // note off
 		pressedKey = document.querySelector("#" + finalNote.replace("#", "-"));
-		pressedKey.classList.add("pressed");
+		if (pressedKey.classList.contains("pressed")) {
+			return;
+		} else {
+			// const pos = myArray.map((e) => e.hello).indexOf("stevie");
+			// console.log(finalNote);
+			midi.send([0x90, finalNote, 127]); // note off
+			pressedKey.classList.add("pressed");
+		}
 	}
 
 	function keyDebug(e) {
@@ -112,34 +147,74 @@
 		// console.log(code);
 		let finalNoteIndex = noteKeys.findIndex((i) => i.key === code);
 		let finalNote = noteKeys[finalNoteIndex].note;
+		midi.send([0x80, finalNote, 0]);
 		releasedKey = document.querySelector("#" + finalNote.replace("#", "-"));
 		releasedKey.classList.remove("pressed");
 	}
 </script>
 
-<main class="flex h-full flex-row items-center justify-center">
-	{#each notes as note}
-		<div class="relative">
-			{#if note.includes("#")}
-				<button
-					id={note.replace("#", "-")}
-					class="btn btn-filled-primary btn-base absolute -bottom-14 -right-8 z-10 m-1 h-64 w-12 rounded-lg bg-black text-white"
-					on:mousedown={() => playNote(note)}
-					on:keydown={(e) => playNoteKey(e.code)}
-					on:keyup={(e) => keyUp(e.code)}>
-					<span class="relative -bottom-16">{note}</span></button>
-			{:else}
-				<button
-					id={note.replace("#", "-")}
-					class="btn btn-filled-primary btn-base z-20 m-1 h-96 w-16 rounded-lg bg-white"
-					on:mousedown={() => playNote(note)}
-					on:keydown={(e) => playNoteKey(e.code)}
-					on:keyup={(e) => keyUp(e.code)}>
-					<span class="relative -bottom-32">{note}</span></button>
-			{/if}
-		</div>
-	{/each}
+<main class="flex h-full flex-col items-center justify-center">
+	<RangeSlider bind:value={currentProgram} max={127} step={1} ticked class="w-3/4"
+		>{instruments[currentProgram]}</RangeSlider>
+	<div>
+		<article
+			on:mouseup={() => {
+				mouseDown = false;
+			}}
+			class="flex h-full flex-row items-center justify-center">
+			{#each notes as note}
+				{#if note.includes("#")}
+					<div
+						class="relative"
+						on:mousedown={() => {
+							mouseDown = true;
+							playNote(note);
+						}}
+						on:mouseup={() => {
+							mouseDown = false;
+							releaseNote(note);
+						}}
+						on:mouseenter={() => playNote(note)}
+						on:mouseleave={() => releaseNote(note)}
+						on:keydown={(e) => playNoteKey(e.code)}
+						on:keyup={(e) => keyUp(e.code)}>
+						<button
+							id={note.replace("#", "-")}
+							class="absolute -bottom-14 -right-8 z-10 m-0.5 h-64 w-12 rounded-lg bg-black text-white">
+							<span class="relative -bottom-16">{note}</span></button>
+					</div>
+				{:else}
+					<div
+						class="relative"
+						on:mousedown={() => {
+							mouseDown = true;
+							playNote(note);
+						}}
+						on:mouseup={() => {
+							mouseDown = false;
+							releaseNote(note);
+						}}
+						on:mouseenter={() => playNote(note)}
+						on:mouseleave={() => releaseNote(note)}
+						on:keydown={(e) => playNoteKey(e.code)}
+						on:keyup={(e) => keyUp(e.code)}>
+						<button
+							id={note.replace("#", "-")}
+							class="z-20 m-0.5 h-96 w-16 rounded-lg bg-white text-black">
+							<span class="relative -bottom-32">{note}</span></button>
+					</div>
+				{/if}
+			{/each}
+		</article>
+	</div>
 </main>
 
 <style>
+	:global(.pressed) {
+		@apply scale-95 bg-blue-300 transition-all duration-100;
+	}
+	/* scale messed up mouseenter etc because of absolute children so remove scale*/
+	:global(.pressed2) {
+		@apply bg-blue-300 transition-all duration-100;
+	}
 </style>
