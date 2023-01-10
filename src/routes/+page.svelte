@@ -101,7 +101,6 @@
 	let currentProgram = 0;
 	let mouseDown;
 
-
 	$: {
 		midi.program(0, currentProgram);
 		synth.program(0, currentProgram);
@@ -167,29 +166,29 @@
 </script>
 
 <div class="absolute">
-  {#await midi then value}
-    <!-- {console.log(value.info())} -->
-    {#each Object.entries(value.info()) as info}
-      <p>{info},</p>
-    {/each}
-  {/await}
+	{#await midi then value}
+		<!-- {console.log(value.info())} -->
+		{#each Object.entries(value.info()) as info}
+			<p>{info},</p>
+		{/each}
+	{/await}
 </div>
 <main class="flex h-full flex-col items-center justify-center">
-  <div class="flex flex-col items-center">
-    <p>Octave shift</p>
-    <div class="flex">
-      <button
-			class="rounded-lg bg-slate-100 p-1 px-4 text-4xl text-black"
-			on:click={() => shiftOctave(-1)}>-</button>
-      <p class="p-4 !text-4xl">
-        {octaveShift}
-      </p>
-      <button
-			class="rounded-lg bg-slate-100 p-1 px-4 text-4xl text-black"
-			on:click={() => shiftOctave(1)}>+</button>
-    </div>
-  </div>
-	<RangeSlider bind:value={currentProgram} max={127} step={1} class="w-3/4 p-12"
+	<div class="flex flex-col items-center">
+		<p>Octave shift</p>
+		<div class="flex">
+			<button
+				class="rounded-lg bg-slate-100 p-1 px-4 text-4xl text-black"
+				on:click={() => shiftOctave(-1)}>-</button>
+			<p class="p-4 !text-4xl">
+				{octaveShift}
+			</p>
+			<button
+				class="rounded-lg bg-slate-100 p-1 px-4 text-4xl text-black"
+				on:click={() => shiftOctave(1)}>+</button>
+		</div>
+	</div>
+	<RangeSlider bind:value={currentProgram} max={127} step={1} class="w-3/4 p-2 lg:p-12"
 		>{instruments[currentProgram]}</RangeSlider>
 	<div>
 		<article
@@ -201,6 +200,14 @@
 				{#if note.includes("#")}
 					<div
 						class="relative"
+						on:touchstart={() => {
+							mouseDown = true;
+							playNote(note);
+						}}
+						on:touchend={() => {
+							mouseDown = false;
+							releaseNote(note);
+						}}
 						on:mousedown={() => {
 							mouseDown = true;
 							playNote(note);
@@ -221,6 +228,14 @@
 				{:else}
 					<div
 						class="relative"
+						on:touchstart={() => {
+							mouseDown = true;
+							playNote(note);
+						}}
+						on:touchend={() => {
+							mouseDown = false;
+							releaseNote(note);
+						}}
 						on:mousedown={() => {
 							mouseDown = true;
 							playNote(note);
