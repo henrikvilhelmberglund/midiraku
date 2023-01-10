@@ -2,7 +2,6 @@
 	import JZZ from "jzz";
 	import TINY from "jzz-synth-tiny";
 	TINY(JZZ);
-	import { RangeSlider } from "@skeletonlabs/skeleton";
 	import { instruments } from "./instruments.js";
 	// JZZ.synth.Tiny.register("Web Audio");
 	let midi = JZZ().openMidiOut();
@@ -174,7 +173,7 @@
 	{/await}
 </div>
 <main class="flex h-full flex-col items-center justify-center">
-	<div class="flex flex-col items-center">
+	<div class="absolute lg:flex lg:flex-col lg:items-center">
 		<p>Octave shift</p>
 		<div class="flex">
 			<button
@@ -188,8 +187,12 @@
 				on:click={() => shiftOctave(1)}>+</button>
 		</div>
 	</div>
-	<RangeSlider bind:value={currentProgram} max={127} step={1} class="w-3/4 p-2 lg:p-12"
-		>{instruments[currentProgram]}</RangeSlider>
+	<input
+		type="range"
+		bind:value={currentProgram}
+		max={127}
+		step={1}
+		class="w-3/4 p-2 lg:p-12" />{instruments[currentProgram]}
 	<div>
 		<article
 			on:mouseup={() => {
@@ -222,7 +225,7 @@
 						on:keyup={(e) => keyUp(e.code)}>
 						<button
 							id={note.replace("#", "-")}
-							class="absolute -bottom-14 -right-8 z-10 m-0.5 h-64 w-12 rounded-lg bg-black text-white">
+							class="absolute -bottom-14 -right-8 z-10 m-0.5 h-52 w-12 rounded-lg bg-black text-white lg:h-64">
 							<span class="relative -bottom-16">{note}</span></button>
 					</div>
 				{:else}
@@ -250,7 +253,7 @@
 						on:keyup={(e) => keyUp(e.code)}>
 						<button
 							id={note.replace("#", "-")}
-							class="z-20 m-0.5 h-96 w-16 rounded-lg bg-white text-black">
+							class="z-20 m-0.5 h-72 w-16 rounded-lg border-2 border-solid border-black bg-white text-black lg:h-96">
 							<span class="relative -bottom-32">{note}</span></button>
 					</div>
 				{/if}
