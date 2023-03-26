@@ -1,8 +1,11 @@
 export class Note {
-	constructor(noteValue, channel, program, velocity, startTime, endTime) {
+	constructor(noteValue, channel, program, measure, bar, beat, velocity, startTime, endTime) {
 		this.noteValue = noteValue;
 		this.channel = channel;
 		this.program = program;
+		this.measure = measure;
+		this.bar = bar;
+		this.beat = beat;
 		this.velocity = velocity;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -21,9 +24,9 @@ export const noteList = [
 	"G#0",
 	"A0",
 	"A#0",
-  "B0",
-  
-  "C1",
+	"B0",
+
+	"C1",
 	"C#1",
 	"D1",
 	"D#1",
@@ -34,9 +37,9 @@ export const noteList = [
 	"G#1",
 	"A1",
 	"A#1",
-  "B1",
-  
-  "C2",
+	"B1",
+
+	"C2",
 	"C#2",
 	"D2",
 	"D#2",
