@@ -3,6 +3,7 @@
 	import { Note, sortedNotes, noteList } from "../lib/note";
 	import { WebMidi } from "webmidi";
 	import N from "$lib/N.svelte";
+	import Pianoroll from "$lib/Pianoroll.svelte";
 
 	WebMidi.enable()
 		.then(() => onEnabled())
@@ -16,13 +17,9 @@
 	// channel.playNote(["C3", "D#3", "G3"]);
 
 	let song = [];
+	let songMeasures = 1;
 
-	let m = { x: 0, y: 0 };
-
-	function handleMousemove(event) {
-		m.x = event.clientX;
-		m.y = event.clientY;
-	}
+	
 
 	function onEnabled() {
 		// Inputs
@@ -38,15 +35,6 @@
 
 	let currentPlayingNote;
 
-	function addNote(note) {
-		let newNote = new Note(note, selectedChannel, 0, 80, 4, 7);
-		song.push(newNote);
-		song = song;
-		console.log(song);
-		channel.playNote(note);
-		currentPlayingNote = note;
-	}
-
 	function playNote(note) {
 		channel.playNote(note);
 		currentPlayingNote = note;
@@ -61,23 +49,17 @@
 	{JSON.stringify(song)}
 </div>
 
-<main on:mousemove={handleMousemove} class="[&>*]:m-0 w-[3000px]">
-	The mouse position is {m.x} x {m.y}
-	{#each sortedNotes as note}
-		<div
-			on:mousedown={() => addNote(note)}
-			on:mouseup={() => stopNote()}
-			class="h-10 w-full border bg-slate-200">
-			{note}
-		</div>
-		{#each song as songNote}
-			{#if note === songNote.noteValue}
-				<div class="relative">
-					<N noteValue={songNote.noteValue} />
+<main class="flex w-[3000px] flex-col [&>*]:m-0">
+	<div class="flex-row">
+		<div>
+			{#each sortedNotes as note}
+				<div class="h-10 w-10 border bg-slate-200">
+					{note}
 				</div>
-			{/if}
-		{/each}
-	{/each}
+			{/each}
+		</div>
+		<Pianoroll {channel} {selectedChannel} {songMeasures} {song} />
+	</div>
 </main>
 
 <aside class="flex">
